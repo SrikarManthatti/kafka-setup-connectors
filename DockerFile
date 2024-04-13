@@ -1,0 +1,13 @@
+# Use the official Kafka Connect image as the base image
+FROM confluentinc/cp-kafka-connect:7.5.1
+
+# Install the Kafka Connect JDBC Sink Connector
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
+
+#another connect transformation whcih is required
+RUN confluent-hub install --no-prompt jcustenborder/kafka-connect-transform-common:0.1.0.54
+
+#installing this jar
+#RUN curl -L -o /usr/share/java/kafka/struct-converters-1.2.0.jar https://github.com/baunz/struct-converters/releases/download/v0.0.2/struct-converters-v0.0.2.jar
+COPY struct-converters-v0.0.2.jar /usr/share/java/kafka/
+

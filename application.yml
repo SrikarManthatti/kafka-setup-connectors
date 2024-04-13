@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+akhq:
+  connections:
+    local:
+      properties:
+        bootstrap.servers: "broker:29092"
+      connect:
+        - name: connect-1
+          url: "http://connect:8083"

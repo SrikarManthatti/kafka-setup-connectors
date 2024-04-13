@@ -1,0 +1,28 @@
+{
+    "name": "jdbc-sink-connector",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "value.converter": "com.github.baunz.kafka.connect.storage.StringAsStructConverter",
+      "tasks.max": "1",
+      "topics": "sampletest",
+      "connection.url": "jdbc:postgresql://192.168.208.3:5432/postgres",
+      "connection.user": "postgres",
+      "connection.password": "postgres",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "insert.mode.databaselevel": true,
+      "table.name.format":"sampletest",
+      "transforms": "InsertField,insertAppIdHeader,RenameField",
+      "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+      "transforms.InsertField.static.field":"status",
+      "transforms.InsertField.static.value":"NEW",
+      "transforms.InsertField.timestamp.field": "timestamp",
+      "transforms.insertAppIdHeader.type": "com.github.jcustenborder.kafka.connect.transform.common.HeaderToField$Value",
+      "transforms.insertAppIdHeader.header.mappings": "__connect.errors.topic:STRING,__connect.errors.partition:STRING,__connect.errors.offset:STRING,__connect.errors.connector.name:STRING,__connect.errors.task.id:STRING,__connect.errors.stage:STRING,__connect.errors.class.name:STRING,__connect.errors.exception.class.name:STRING,__connect.errors.exception.message:STRING,__connect.errors.exception.stacktrace:STRING",
+      "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+      "transforms.RenameField.renames":"value:payload_message,__connect.errors.topic:errors_topic,__connect.errors.partition:errors_partition,__connect.errors.offset:errors_offset,__connect.errors.connector.name:error_connector_name,__connect.errors.task.id:errors_task_id,__connect.errors.stage:errors_stage,__connect.errors.class.name:errors_class_name,__connect.errors.exception.class.name:errors_exception_class_name,__connect.errors.exception.message:errors_exception_message,__connect.errors.exception.stacktrace:errors_exception_stacktrace",
+      "fields.whitelist": "status,timestamp,payload_message,errors_topic,errors_partition,errors_offset,error_connector_name,errors_task_id,errors_stage,errors_class_name,errors_exception_class_name,errors_exception_message,errors_exception_stacktrace",
+      "batch.size": 1
+    }
+  }
+  
